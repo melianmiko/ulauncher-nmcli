@@ -82,8 +82,9 @@ class ItemEnterEventListener(EventListener):
             # Success, connected
             nm_tools.send_notification("Now connected: " + con["name"])
 
+        # Run script if successfully connected and script isn't empty
         script = extension.preferences.get("script_on_connect")
-        if not con["active"] and script != "":
+        if not con["active"] and script != "" and result:
             subprocess.run([script, con["name"], con["uuid"]], stdout=subprocess.PIPE)
 
 
