@@ -1,5 +1,6 @@
 import logging
 import os.path
+import subprocess
 
 import gi
 
@@ -80,6 +81,10 @@ class ItemEnterEventListener(EventListener):
         else:
             # Success, connected
             nm_tools.send_notification("Now connected: " + con["name"])
+
+        script = extension.preferences.get("script_on_connect")
+        if not con["active"] and script != "":
+            subprocess.run([script, con["name"], con["uuid"]], stdout=subprocess.PIPE)
 
 
 if __name__ == '__main__':
