@@ -31,14 +31,17 @@ class NetworkManagerExtension(Extension):
 
 class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
+        search_query = event.get_argument()
         hidden_types = extension.preferences.get("hidden_type_list").split(",")
         connections = nm_tools.get_connections()
         connections = sorted(connections, key=lambda d: d["name"].lower())
 
-        logger.debug(hidden_types)
-
         items = []
         for a in connections:
+            name = a["name"]
+            if search_query is not None and search_query not in name.lower():
+                continue
+
             description = description_active if a["active"] else description_inactive
             description = description.format(a["type"])
             icon_name = "{}_{}".format(a["type"], a["active"])
@@ -52,7 +55,7 @@ class KeywordQueryEventListener(EventListener):
 
             on_click_event = ExtensionCustomAction(a, keep_app_open=False)
             item_row = ExtensionResultItem(icon=icon_path,
-                                           name=a["name"],
+                                           name=name,
                                            description=description,
                                            on_enter=on_click_event)
             items.append(item_row)
