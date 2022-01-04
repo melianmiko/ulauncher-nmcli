@@ -1,6 +1,6 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "NetworkManager connect",
+  "name": "NetworkManager",
   "description": "Enable or disable network connections, like Wi-Fi, VPN, etc.",
   "developer_name": "MelianMiko",
   "icon": "images/icon.png",

@@ -7,11 +7,14 @@ from dbus.mainloop.glib import DBusGMainLoop
 DBusGMainLoop(set_as_default=True)
 system = dbus.SystemBus()
 
-notify_props = "--icon=" + os.path.dirname(os.path.realpath(__file__)) + "/images/icon.png"
-
 
 def send_notification(text):
-    subprocess.run(["notify-send", notify_props, text])
+    subprocess.run(["notify-send",
+                    "-h", "int:transient:1",
+                    "--icon=" + os.path.dirname(os.path.realpath(__file__)) + "/images/icon.png",
+                    text,
+                    "ULauncher NetworkManager"
+                    ])
 
 
 def get_active_connection_uuids():
