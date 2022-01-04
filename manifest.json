@@ -1,0 +1,31 @@
+{
+  "required_api_version": "^2.0.0",
+  "name": "NetworkManager connect",
+  "description": "Enable or disable network connections, like Wi-Fi, VPN, etc.",
+  "developer_name": "MelianMiko",
+  "icon": "images/icon.png",
+  "preferences": [
+    {
+      "id": "base_keyword",
+      "type": "keyword",
+      "name": "Main keyword",
+      "description": "",
+      "default_value": "con"
+    },
+    {
+      "id": "script_on_connect",
+      "type": "input",
+      "name": "Run command after connection",
+      "description": "Optional",
+      "default_value": ""
+    },
+    {
+      "id": "hidden_type_list",
+      "type": "input",
+      "name": "Hidden connection types, separated with comma",
+      "description": "Optional, default: bridge",
+      "default_value": "bridge"
+    }
+  ]
+}
+  
