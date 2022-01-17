@@ -75,15 +75,17 @@ class ItemEnterEventListener(EventListener):
 
         logging.debug(log)
 
-        if not result:
-            # Operation failed
-            nm_tools.send_notification("Operation failed: " + log)
-        elif con["active"]:
-            # Success, disconnected
-            nm_tools.send_notification("Now disconnected: " + con["name"])
-        else:
-            # Success, connected
-            nm_tools.send_notification("Now connected: " + con["name"])
+        # Notification
+        if extension.preferences.get("enable_notifications") == "true":
+            if not result:
+                # Operation failed
+                nm_tools.send_notification("Operation failed: " + log)
+            elif con["active"]:
+                # Success, disconnected
+                nm_tools.send_notification("Now disconnected: " + con["name"])
+            else:
+                # Success, connected
+                nm_tools.send_notification("Now connected: " + con["name"])
 
         # Run script if successfully connected and script isn't empty
         script = extension.preferences.get("script_on_connect")
