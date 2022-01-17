@@ -20,6 +20,22 @@
       "default_value": ""
     },
     {
+      "id": "enable_notifications",
+      "type": "select",
+      "name": "Enable notifications",
+      "default_value": true,
+      "options": [
+        {
+          "text": "Yes",
+          "value": true
+        },
+        {
+          "text": "No",
+          "value": false
+        }
+      ]
+    },
+    {
       "id": "hidden_type_list",
       "type": "input",
       "name": "Hidden connection types, separated with comma",
