@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 description_active = "{} | ACTIVE | Select to disconnect"
 description_inactive = "{} | Select to connect"
 
+
 class NetworkManagerExtension(Extension):
     def __init__(self):
         super(NetworkManagerExtension, self).__init__()
