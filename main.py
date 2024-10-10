@@ -1,4 +1,5 @@
 import logging
+import math
 import os.path
 import subprocess
 
@@ -34,8 +35,12 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         search_query = event.get_argument()
         hidden_types = extension.preferences.get("hidden_type_list").split(",")
+        wifi_hide_out_of_range = extension.preferences.get(
+            "wifi_hide_out_of_range") == "true"
         connections = nm_tools.get_connections()
-        connections = sorted(connections, key=lambda d: d["name"].lower())
+        connections = sorted(connections,
+                             key=lambda d:
+                             (-int(d["strength"]), d["name"].lower()))
 
         items = []
         for a in connections:
@@ -45,13 +50,22 @@ class KeywordQueryEventListener(EventListener):
 
             description = description_active if a["active"] else description_inactive
             description = description.format(a["type"])
-            icon_name = "{}_{}".format(a["type"], a["active"])
+            if a["type"] == "802-11-wireless":
+                icon_name = "{}-{}_{}".format(
+                    a["type"],
+                    '%02d' % (25 * math.ceil(int(a["strength"]) / 25)), # 00, 25, 50, 75, 100
+                    a["active"])
+            else:
+                icon_name = "{}_{}".format(a["type"], a["active"])
             icon_path = 'images/{}.png'.format(icon_name)
 
             if not os.path.isfile(icon_path):
                 logger.warning("Icon not found: " + icon_path)
 
             if a["type"] in hidden_types:
+                continue
+
+            if wifi_hide_out_of_range and a["type"] == "802-11-wireless" and int(a["strength"]) == 0:
                 continue
 
             on_click_event = ExtensionCustomAction(a, keep_app_open=False)
