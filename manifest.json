@@ -36,6 +36,22 @@
       ]
     },
     {
+      "id": "wifi_hide_out_of_range",
+      "type": "select",
+      "name": "Hide out of range Wi-Fi networks",
+      "default_value": true,
+      "options": [
+        {
+          "text": "Yes",
+          "value": true
+        },
+        {
+          "text": "No",
+          "value": false
+        }
+      ]
+    },
+    {
       "id": "hidden_type_list",
       "type": "input",
       "name": "Hidden connection types, separated with comma",
